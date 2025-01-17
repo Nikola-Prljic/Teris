@@ -15,6 +15,7 @@ class ABuildings
         void load_model();
     
     public:
+        ~ABuildings();
         ABuildings(std::string model_path, std::string model_texture_path);
 
 };

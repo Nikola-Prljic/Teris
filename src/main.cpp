@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <iostream>
-//#include "buildings/ABuildings.hpp"
+#include "buildings/ABuildings.hpp"
 #include "map.hpp"
 
 int main()
@@ -15,7 +15,7 @@ int main()
     Texture2D texture = LoadTexture("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
 
-    //ABuildings building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+    ABuildings building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
 
     Camera camera = { 0 };
     camera.position = (Vector3){ 5.0f, 5.0f, 5.0f }; // Camera position
