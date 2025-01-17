@@ -11,9 +11,9 @@ int main()
 
     InitWindow(screenWidth, screenHeight, "Teris");
 
-    Model model = LoadModel("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj");
-    Texture2D texture = LoadTexture("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    //Model model = LoadModel("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj");
+    //Texture2D texture = LoadTexture("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+    //model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
 
     ABuildings building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
 
@@ -26,7 +26,7 @@ int main()
     
     Vector3 pos = (Vector3){ 1.0f, 0.0f, -1.0f };
     //pos = (Vector3){ 0.0f, 0.0f, 0.0f };
-    BoundingBox boundsOri = GetMeshBoundingBox(model.meshes[0]);
+    BoundingBox boundsOri = GetMeshBoundingBox(building.getModel().meshes[0]);
     BoundingBox bounds = boundsOri;
     bounds.min = Vector3Add(bounds.min, pos);
     bounds.max = Vector3Add(bounds.max, pos);
@@ -85,7 +85,7 @@ int main()
                 //DrawModel(model, pos, 1.0f, WHITE);
                 if (place_model == false)
                 {
-                    DrawModel(model, groundHitInfo.point, 1.0f, WHITE);
+                    DrawModel(building.getModel(), groundHitInfo.point, 1.0f, WHITE);
                     DrawBoundingBox(bounds, GREEN);
                     place_model = false;
                 }
@@ -97,6 +97,6 @@ int main()
     }
 
     //UnloadTexture(texture);
-    UnloadModel(model);
+    //UnloadModel(model);
     CloseWindow();
 }
