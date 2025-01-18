@@ -11,5 +11,5 @@ class House : public ABuildings
 
     public:
 
-        House(std::string model_path, std::string model_texture_path);
+        House(const std::string &model_path, const std::string &model_texture_path);
 };
