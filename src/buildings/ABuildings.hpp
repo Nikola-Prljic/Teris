@@ -5,7 +5,7 @@
 
 class ABuildings 
 {
-    private:
+    protected:
 
         Model model;
         Texture2D texture;
@@ -15,6 +15,7 @@ class ABuildings
         
         ABuildings();
         void load_model();
+        virtual void f() = 0;
     
     public:
         ABuildings(std::string model_path, std::string model_texture_path);
