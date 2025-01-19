@@ -23,10 +23,6 @@ int main()
 
     SetTargetFPS(30);
 
-    Ray ray = { 0 };
-
-    //Vector2 mouse_pos = { 0 };
-
     bool place_model = false;
 
     map game_map("Teris", 4);
