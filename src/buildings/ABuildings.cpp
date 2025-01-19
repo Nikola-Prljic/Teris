@@ -1,6 +1,6 @@
 #include "ABuildings.hpp"
 
-ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path)
+ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path), pos()
 {
     //load_model();
 }
@@ -25,6 +25,24 @@ const Model &ABuildings::getModel() const { return model; }
 const BoundingBox &ABuildings::getHitBox() const { return hit_box; }
 
 const BoundingBox &ABuildings::getHitBoxPos() const { return hit_box_pos; }
+
+Vector3 ABuildings::getPos() { return pos; }
+
+#include <iostream>
+
+//floors the number and checks if odd other wise add 1
+float getCellCenter(const float &num)
+{
+    int x = static_cast<int>(std::floor(num));
+    return (x += (x % 2 == 0));
+}
+
+// one cell of the grid is 2x2 so when user cklicks center the model
+void ABuildings::setPos(const RayCollision &groundHitInfo) 
+{
+    pos.x = getCellCenter(groundHitInfo.point.x);
+    pos.z = getCellCenter(groundHitInfo.point.z);
+}
 
 void ABuildings::setHitBoxPos(const RayCollision &groundHitInfo)
 {

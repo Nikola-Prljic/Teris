@@ -33,6 +33,6 @@ void map::setModelOnGameMap(ABuildings *model, const Camera &camera)
 {
     RayCollision groundHitInfo = GetMapCollisionQuad(camera);
     model->setHitBoxPos(groundHitInfo);
-    model->pos = groundHitInfo.point;
+    model->setPos(groundHitInfo);
     game_map.push_back(model);
 }
