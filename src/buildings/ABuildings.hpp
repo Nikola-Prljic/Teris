@@ -17,17 +17,21 @@ class ABuildings
         std::string model_texture_path;
         
         ABuildings();
-        void load_model();
         virtual void f() = 0;
     
     public:
 
         ABuildings(const std::string &model_path, const std::string &model_texture_path);
-        ~ABuildings();
+        virtual ~ABuildings();
+
+        void load_model();
+        void unload_model();
 
         const Model &getModel() const;
         const BoundingBox &getHitBox() const;
         const BoundingBox &getHitBoxPos() const;
 
         void setHitBoxPos(const RayCollision &groundHitInfo);
+
+        Vector3 pos;
 };

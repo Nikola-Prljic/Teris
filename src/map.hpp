@@ -4,6 +4,7 @@
 #include <string>
 #include <raylib.h>
 #include <vector>
+#include "buildings/ABuildings.hpp"
 
 class map {
 
@@ -14,10 +15,14 @@ class map {
         map();
 
     public:
+        std::vector<ABuildings *> game_map;
         map(const std::string name, const int size);
         ~map();
 
-        RayCollision GetMapCollisionQuad(Vector2 mouse_pos, Camera camera);
+        RayCollision GetMapCollisionQuad(const Camera &camera);
+        std::vector<ABuildings *> getGameMap();
+
+        void setModelOnGameMap(ABuildings *model, const Camera &camera);
 
 };
 

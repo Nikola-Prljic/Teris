@@ -2,13 +2,13 @@
 
 ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path)
 {
-    load_model();
+    //load_model();
 }
 
 ABuildings::~ABuildings()
 {
-    UnloadTexture(texture);
-    UnloadModel(model);
+    //UnloadTexture(texture);
+    //UnloadModel(model);
 }
 
 void ABuildings::load_model()
@@ -30,4 +30,10 @@ void ABuildings::setHitBoxPos(const RayCollision &groundHitInfo)
 {
     hit_box_pos.min = Vector3Add(hit_box.min, groundHitInfo.point);
     hit_box_pos.max = Vector3Add(hit_box.max, groundHitInfo.point);
+}
+
+void ABuildings::unload_model()
+{
+    UnloadTexture(texture);
+    UnloadModel(model);
 }
