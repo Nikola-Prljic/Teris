@@ -35,6 +35,37 @@ int main()
     {
         UpdateCamera(&camera, CAMERA_PERSPECTIVE);
 
+        Vector3 move_target = Vector3Add(camera.target, Vector3{0.0f, camera.position.y, 0.0f});
+        Vector3 forward = Vector3Normalize(Vector3Subtract(move_target, camera.position));
+        Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, camera.up));
+
+        Vector3 forward_target = Vector3Normalize(Vector3Subtract(move_target, camera.position));
+        Vector3 right_target = Vector3Normalize(Vector3CrossProduct(forward, camera.up));
+
+        // Movement speed
+        float moveSpeed = 0.5f;
+
+        // Forward/Backward movement (W/S keys)
+        if (IsKeyDown(KEY_W)) {
+            camera.position = Vector3Add(camera.position, Vector3Scale(forward, moveSpeed));
+            camera.target = Vector3Add(camera.target, Vector3Scale(forward_target, moveSpeed));
+        }
+        if (IsKeyDown(KEY_S)) {
+            camera.position = Vector3Subtract(camera.position, Vector3Scale(forward, moveSpeed));
+            camera.target = Vector3Subtract(camera.target, Vector3Scale(forward_target, moveSpeed));
+        }
+
+        // Left/Right movement (A/D keys)
+        if (IsKeyDown(KEY_A)) {
+            camera.position = Vector3Subtract(camera.position, Vector3Scale(right, moveSpeed));
+            camera.target = Vector3Subtract(camera.target, Vector3Scale(right_target, moveSpeed));
+        }
+        if (IsKeyDown(KEY_D)) {
+            camera.position = Vector3Add(camera.position, Vector3Scale(right, moveSpeed));
+            camera.target = Vector3Add(camera.target, Vector3Scale(right_target, moveSpeed));
+        }
+
+
         //ray = GetScreenToWorldRay(mouse_pos, camera);
         
         RayCollision groundHitInfo = game_map.GetMapCollisionQuad(camera);
@@ -47,13 +78,15 @@ int main()
             //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
             game_map.setModelOnGameMap(building2, camera);
         }
-            
+
+        //Vector3 interfacePos = Vector3Add(camera.position, Vector3{-0.0f, -0.5f, -0.0f});  
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
 
             BeginMode3D(camera);
                 DrawGrid((int) 10, 1.0f);
+                DrawCube(camera.target, 0.1f, 0.1f, 0.1f, RED);
                 //DrawModel(model, pos, 1.0f, WHITE);
                 if (place_model == false)
                 {
@@ -67,6 +100,12 @@ int main()
                 }
                 //DrawRay(ray, RED);
             EndMode3D();
+
+            //UpdateCamera(&camera, CAMERA_PERSPECTIVE);
+            //BeginMode3D(camera);
+            //    Vector3 interfacePos = camera.target;
+            //    interface.draw(building.getModel(), interfacePos);
+            //EndMode3D();
 
             DrawFPS(10, 10);
         EndDrawing();
