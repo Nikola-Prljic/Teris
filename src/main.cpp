@@ -76,9 +76,6 @@ int main()
         {
             rotateCamera(&camera, rotationSpeed, true);
         }
-        if (IsKeyDown(KEY_D)) {
-            camera.position = Vector3Add(camera.position, Vector3Scale(right, moveSpeed));
-            camera.target = Vector3Add(camera.target, Vector3Scale(right_target, moveSpeed));
         if(IsKeyDown(KEY_Q))
         {
             rotateCamera(&camera, -rotationSpeed, true);
