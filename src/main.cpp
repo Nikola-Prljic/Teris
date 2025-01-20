@@ -54,32 +54,6 @@ int main()
 
     while(!WindowShouldClose())
     {
-        UpdateCamera(&camera, CAMERA_PERSPECTIVE);
-
-        Vector3 move_target = Vector3Add(camera.target, Vector3{0.0f, camera.position.y, 0.0f});
-        Vector3 forward = Vector3Normalize(Vector3Subtract(move_target, camera.position));
-        Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, camera.up));
-
-        Vector3 forward_target = Vector3Normalize(Vector3Subtract(move_target, camera.position));
-        Vector3 right_target = Vector3Normalize(Vector3CrossProduct(forward, camera.up));
-
-        // Movement speed
-        float moveSpeed = 0.5f;
-
-        // Forward/Backward movement (W/S keys)
-        if (IsKeyDown(KEY_W)) {
-            camera.position = Vector3Add(camera.position, Vector3Scale(forward, moveSpeed));
-            camera.target = Vector3Add(camera.target, Vector3Scale(forward_target, moveSpeed));
-        }
-        if (IsKeyDown(KEY_S)) {
-            camera.position = Vector3Subtract(camera.position, Vector3Scale(forward, moveSpeed));
-            camera.target = Vector3Subtract(camera.target, Vector3Scale(forward_target, moveSpeed));
-        }
-
-        // Left/Right movement (A/D keys)
-        if (IsKeyDown(KEY_A)) {
-            camera.position = Vector3Subtract(camera.position, Vector3Scale(right, moveSpeed));
-            camera.target = Vector3Subtract(camera.target, Vector3Scale(right_target, moveSpeed));
         }
         if (IsKeyDown(KEY_D)) {
             camera.position = Vector3Add(camera.position, Vector3Scale(right, moveSpeed));
