@@ -5,8 +5,8 @@ map::map(const std::string name, const int size) : name(name), size(size), map_h
 {
     Vector3 g0 = (Vector3){ (float)-size, 0.0f, (float)-size };
     Vector3 g1 = (Vector3){ (float)-size, 0.0f,  (float)size };
-    Vector3 g2 = (Vector3){  50.0f, 0.0f,  (float)size };
-    Vector3 g3 = (Vector3){  50.0f, 0.0f, (float)-size };
+    Vector3 g2 = (Vector3){  (float)size, 0.0f,  (float)size };
+    Vector3 g3 = (Vector3){  (float)size, 0.0f, (float)-size };
     map_hitbox = {g0, g1, g2, g3};
 };
 
