@@ -2,6 +2,7 @@
 #include <raymath.h>
 #include <iostream>
 #include "buildings/House.hpp"
+#include "interface/Interface.hpp" 
 #include "map.hpp"
 
 int main()
