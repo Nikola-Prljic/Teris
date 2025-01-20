@@ -47,19 +47,14 @@ int main()
 
     SetTargetFPS(30);
 
-    bool place_model = false;
-
     map game_map("Teris", 4);
     Interface interface;
-
-    float angle = 0.0f;
-    float radius = 5.0f;
 
     while(!WindowShouldClose())
     {
         Vector3 movement = Vector3{0.0f, 0.0f, 0.0f};
         float movmentspeed = 0.2f;
-        float rotationSpeed = 0.05f;
+        float rotationSpeed = 0.04f;
 
         if(IsKeyDown(KEY_W))
             movement.x += 1 * movmentspeed;
@@ -102,16 +97,13 @@ int main()
                 DrawGrid((int) 10, 1.0f);
                 DrawCube(camera.target, 0.1f, 0.1f, 0.1f, RED);
                 //DrawModel(model, pos, 1.0f, WHITE);
-                if (place_model == false)
+
+                DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
+                for(int i = 0; i < (int)game_map.game_map.size(); i++)
                 {
-                    DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
-                    for(int i = 0; i < (int)game_map.game_map.size(); i++)
-                    {
-                        DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 0.5f, WHITE);
-                    }
-                    DrawBoundingBox(building.getHitBoxPos(), GREEN);
-                    place_model = false;
+                    DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 0.5f, WHITE);
                 }
+                DrawBoundingBox(building.getHitBoxPos(), GREEN);
                 //DrawRay(ray, RED);
             EndMode3D();
 
