@@ -17,6 +17,9 @@ void ABuildings::load_model()
     texture = LoadTexture(model_texture_path.c_str());
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
     hit_box = GetMeshBoundingBox(model.meshes[0]);
+    //scale hit box down because it should fit in a 1x1 grid
+    hit_box.min = Vector3Multiply(hit_box.min, Vector3{0.5f, 0.5f, 0.5f});
+    hit_box.max = Vector3Multiply(hit_box.max, Vector3{0.5f, 0.5f, 0.5f});
     hit_box_pos = hit_box;
 }
 
