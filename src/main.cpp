@@ -29,8 +29,6 @@ int main()
     map game_map("Teris", 4);
     Interface interface;
 
-    float rotationAngle = 0.0f;
-
     while(!WindowShouldClose())
     {
         UpdateCamera(&camera, CAMERA_PERSPECTIVE);
