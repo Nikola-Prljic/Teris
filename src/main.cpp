@@ -5,6 +5,29 @@
 #include "interface/Interface.hpp" 
 #include "map.hpp"
 
+void rotateCamera(Camera *camera, float angle, bool rotateAroundTarget)
+{
+    // Rotation axis
+    Vector3 up = camera->up;
+
+    // View vector
+    Vector3 targetPosition = Vector3Subtract(camera->target, camera->position);
+
+    // Rotate view vector around up axis
+    targetPosition = Vector3RotateByAxisAngle(targetPosition, up, angle);
+
+    if (rotateAroundTarget)
+    {
+        // Move position relative to target
+        camera->position = Vector3Subtract(camera->target, targetPosition);
+    }
+    else // rotate around camera.position
+    {
+        // Move target relative to position
+        camera->target = Vector3Add(camera->position, targetPosition);
+    }
+}
+
 int main()
 {
     const int screenWidth = 800;
