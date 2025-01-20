@@ -52,16 +52,38 @@ int main()
     map game_map("Teris", 4);
     Interface interface;
 
+    float angle = 0.0f;
+    float radius = 5.0f;
+
     while(!WindowShouldClose())
     {
+        Vector3 movement = Vector3{0.0f, 0.0f, 0.0f};
+        float movmentspeed = 0.2f;
+        float rotationSpeed = 0.05f;
+
+        if(IsKeyDown(KEY_W))
+            movement.x += 1 * movmentspeed;
+        if(IsKeyDown(KEY_S))
+            movement.x -= 1 * movmentspeed;
+        if(IsKeyDown(KEY_A))
+            movement.y -= 1 * movmentspeed;
+        if(IsKeyDown(KEY_D))
+            movement.y += 1 * movmentspeed;
+
+        UpdateCameraPro(&camera, movement, Vector3{0.0f, 0.0f, 0.0f}, CAMERA_PERSPECTIVE);
+
+        if(IsKeyDown(KEY_E))
+        {
+            rotateCamera(&camera, rotationSpeed, true);
         }
         if (IsKeyDown(KEY_D)) {
             camera.position = Vector3Add(camera.position, Vector3Scale(right, moveSpeed));
             camera.target = Vector3Add(camera.target, Vector3Scale(right_target, moveSpeed));
+        if(IsKeyDown(KEY_Q))
+        {
+            rotateCamera(&camera, -rotationSpeed, true);
         }
 
-
-        //ray = GetScreenToWorldRay(mouse_pos, camera);
         
         RayCollision groundHitInfo = game_map.GetMapCollisionQuad(camera);
         building.setHitBoxPos(groundHitInfo);
