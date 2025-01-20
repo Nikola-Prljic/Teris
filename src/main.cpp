@@ -49,7 +49,7 @@ int main()
             ClearBackground(RAYWHITE);
 
             BeginMode3D(camera);
-                DrawGrid((int) 10, 2.0f);
+                DrawGrid((int) 10, 1.0f);
                 //DrawModel(model, pos, 1.0f, WHITE);
                 if (place_model == false)
                 {
