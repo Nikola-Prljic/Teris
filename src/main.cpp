@@ -53,10 +53,10 @@ int main()
                 //DrawModel(model, pos, 1.0f, WHITE);
                 if (place_model == false)
                 {
-                    DrawModel(building.getModel(), groundHitInfo.point, 1.0f, WHITE);
+                    DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
                     for(int i = 0; i < (int)game_map.game_map.size(); i++)
                     {
-                        DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 1.0f, WHITE);
+                        DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 0.5f, WHITE);
                     }
                     DrawBoundingBox(building.getHitBoxPos(), GREEN);
                     place_model = false;
