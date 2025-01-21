@@ -2,31 +2,9 @@
 #include <raymath.h>
 #include <iostream>
 #include "buildings/House.hpp"
-#include "interface/Interface.hpp" 
+#include "interface/Interface.hpp"
+#include "move_camera/moveCamera.hpp"
 #include "map.hpp"
-
-void rotateCamera(Camera *camera, float angle, bool rotateAroundTarget)
-{
-    // Rotation axis
-    Vector3 up = camera->up;
-
-    // View vector
-    Vector3 targetPosition = Vector3Subtract(camera->target, camera->position);
-
-    // Rotate view vector around up axis
-    targetPosition = Vector3RotateByAxisAngle(targetPosition, up, angle);
-
-    if (rotateAroundTarget)
-    {
-        // Move position relative to target
-        camera->position = Vector3Subtract(camera->target, targetPosition);
-    }
-    else // rotate around camera.position
-    {
-        // Move target relative to position
-        camera->target = Vector3Add(camera->position, targetPosition);
-    }
-}
 
 int main()
 {
@@ -39,12 +17,18 @@ int main()
     building.load_model();
 
     Camera camera = { 0 };
-    camera.position = (Vector3){ 5.0f, 5.0f, 5.0f }; // Camera position
-    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };     // Camera looking at point
+    camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;
 
+    float movmentspeed = 0.2f;
+    float rotationSpeed = 0.04f;
+    float zoomSpeed = 0.2f;
+
+    moveCamera moveCamera(&camera, movmentspeed, rotationSpeed, zoomSpeed);
+    
     SetTargetFPS(30);
 
     map game_map("Teris", 4);
@@ -52,37 +36,13 @@ int main()
 
     while(!WindowShouldClose())
     {
-        Vector3 movement = Vector3{0.0f, 0.0f, 0.0f};
-        float movmentspeed = 0.2f;
-        float rotationSpeed = 0.04f;
-
-        if(IsKeyDown(KEY_W))
-            movement.x += 1 * movmentspeed;
-        if(IsKeyDown(KEY_S))
-            movement.x -= 1 * movmentspeed;
-        if(IsKeyDown(KEY_A))
-            movement.y -= 1 * movmentspeed;
-        if(IsKeyDown(KEY_D))
-            movement.y += 1 * movmentspeed;
-
-        UpdateCameraPro(&camera, movement, Vector3{0.0f, 0.0f, 0.0f}, CAMERA_PERSPECTIVE);
-
-        if(IsKeyDown(KEY_E))
-        {
-            rotateCamera(&camera, rotationSpeed, true);
-        }
-        if(IsKeyDown(KEY_Q))
-        {
-            rotateCamera(&camera, -rotationSpeed, true);
-        }
-
+        moveCamera.keyDownMoveCamera();
         
         RayCollision groundHitInfo = game_map.GetMapCollisionQuad(camera);
         building.setHitBoxPos(groundHitInfo);
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            std::cout << "Left" << std::endl;
             House* building2 = new House(building);
             //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
             game_map.setModelOnGameMap(building2, camera);
