@@ -31,8 +31,6 @@ const BoundingBox &ABuildings::getHitBoxPos() const { return hit_box_pos; }
 
 Vector3 ABuildings::getPos() { return pos; }
 
-#include <iostream>
-
 //floors the number and checks if odd other wise add 1
 float getCellCenter(const float &num)
 {

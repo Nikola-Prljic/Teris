@@ -27,12 +27,18 @@ int main()
     float rotationSpeed = 0.04f;
     float zoomSpeed = 0.2f;
 
+    Camera2D cameraInterface = { 0 };
+    cameraInterface.target = (Vector2){ 0.0f, 0.0f };
+    cameraInterface.offset = (Vector2){ screenWidth / 2.0f, screenHeight };
+    cameraInterface.rotation = 0.0f;
+    cameraInterface.zoom = 1.0f;
+
     moveCamera moveCamera(&camera, movmentspeed, rotationSpeed, zoomSpeed);
     
     SetTargetFPS(30);
 
     map game_map("Teris", 4);
-    Interface interface;
+    Interface interface(400, 80, BLACK);
 
     while(!WindowShouldClose())
     {
@@ -43,6 +49,17 @@ int main()
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
+            Vector2 mouse_pos = GetMousePosition();
+            Rectangle b_hitbox = interface.getButtonHitBox();
+            bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
+            std::cout << hitbutton << std::endl;
+            std::cout << b_hitbox.height << std::endl;
+            std::cout << b_hitbox.width << std::endl;
+            std::cout << b_hitbox.x << std::endl;
+            std::cout << b_hitbox.y << std::endl;
+            std::cout << mouse_pos.x << std::endl;
+            std::cout << mouse_pos.y << std::endl;
+
             House* building2 = new House(building);
             //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
             game_map.setModelOnGameMap(building2, camera);
@@ -66,13 +83,11 @@ int main()
                 DrawBoundingBox(building.getHitBoxPos(), GREEN);
                 //DrawRay(ray, RED);
             EndMode3D();
-
-            //UpdateCamera(&camera, CAMERA_PERSPECTIVE);
-            //BeginMode3D(camera);
-            //    Vector3 interfacePos = camera.target;
-            //    interface.draw(building.getModel(), interfacePos);
-            //EndMode3D();
-
+            BeginMode2D(cameraInterface);
+                //DrawGrid((int) 10, 1.0f);
+                interface.draw();
+                //interface.draw(building.getModel(), interfacePos);
+            EndMode2D();
             DrawFPS(10, 10);
         EndDrawing();
     }
