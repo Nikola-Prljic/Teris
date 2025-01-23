@@ -2,44 +2,33 @@
 
 Interface::Interface(const int &width_background, const int &height_background, const Color &color_background) : 
 width_background(width_background), height_background(height_background), color_background(color_background), 
-buttonHitBox()
+texture(), _button_map()
 {
-    float offset_height = height_background * 0.9f;
-    float button_height = height_background * 0.8f;
+    Image image  = LoadImage("img/interface.png");
+    texture = LoadTextureFromImage(image);
+    UnloadImage(image);
 
-    float button_width = height_background * 0.8f;
-    float button_offset = width_background / 2 - height_background * 0.1f;
+    createButtons();
 
-    buttonHitBox = Rectangle{400 - button_offset, 450 - offset_height, button_width, button_height};
     return ;
 }
 
-Interface::~Interface() {}
+Interface::~Interface() 
+{
+    UnloadTexture(texture);
+}
+
+void Interface::createButtons()
+{
+    std::string button_name = "house";
+    button new_button("house", Rectangle{0, 520, 100, 80});
+    _button_map.emplace("house", std::make_unique<button>(new_button));
+    //button_map["house"] = new_button;
+}
 
 void Interface::draw()
 {
-    drawInterfaceBackground();
-    drawInterfaceButtons();
-}
-
-// centers the background
-void Interface::drawInterfaceBackground()
-{
-    DrawRectangle(-(width_background / 2), -height_background, width_background, height_background, color_background);
-}
-
-void Interface::drawInterfaceButtons()
-{
-    float offset_height = height_background * 0.9f;
-    float button_height = height_background * 0.8f;
-
-    float button_width = height_background * 0.8f;
-    float button_offset = -(width_background / 2 - height_background * 0.1f);
-
-    DrawRectangle(button_offset, -offset_height, button_width, button_height, Color{12, 35, 71, 200});
-}
-
-Rectangle Interface::getButtonHitBox()
-{
-    return buttonHitBox;
+    DrawTexture(texture, 0, 520, WHITE);
+    //button_map["house"].getHitBox();
+    DrawRectangleLinesEx(_button_map.at("house")->getHitBox(), 4.0f, GREEN);
 }

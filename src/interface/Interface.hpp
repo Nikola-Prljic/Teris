@@ -3,6 +3,9 @@
 #include <string>
 #include <raylib.h>
 #include <raymath.h>
+#include "button.hpp"
+#include <map>
+#include <memory>
 
 class Interface
 {
@@ -12,10 +15,9 @@ class Interface
         int height_background;
         Color color_background;
 
-        Rectangle buttonHitBox;
-
-        void drawInterfaceBackground();
-        void drawInterfaceButtons();
+        Texture2D texture;
+        std::map<std::string, std::unique_ptr<button>> _button_map; 
+        //std::map<std::string, button> button_map;
 
         Interface();
 
@@ -24,8 +26,9 @@ class Interface
         Interface(const int &width_background, const int &height_background, const Color &color_background);
         ~Interface();
 
+        void createButtons();
+
         void draw();
-        Rectangle getButtonHitBox();
 
 
 };

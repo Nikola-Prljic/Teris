@@ -9,7 +9,7 @@
 int main()
 {
     const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "Teris");
 
@@ -29,7 +29,7 @@ int main()
 
     Camera2D cameraInterface = { 0 };
     cameraInterface.target = (Vector2){ 0.0f, 0.0f };
-    cameraInterface.offset = (Vector2){ screenWidth / 2.0f, screenHeight };
+    //cameraInterface.offset = (Vector2){ screenWidth / 2.0f, screenHeight };
     cameraInterface.rotation = 0.0f;
     cameraInterface.zoom = 1.0f;
 
@@ -49,16 +49,10 @@ int main()
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            Vector2 mouse_pos = GetMousePosition();
-            Rectangle b_hitbox = interface.getButtonHitBox();
-            bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
-            std::cout << hitbutton << std::endl;
-            std::cout << b_hitbox.height << std::endl;
-            std::cout << b_hitbox.width << std::endl;
-            std::cout << b_hitbox.x << std::endl;
-            std::cout << b_hitbox.y << std::endl;
-            std::cout << mouse_pos.x << std::endl;
-            std::cout << mouse_pos.y << std::endl;
+            //Vector2 mouse_pos = GetMousePosition();
+            //Rectangle b_hitbox = interface.getButtonHitBox();
+            //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
+            //std::cout << hitbutton << std::endl;
 
             House* building2 = new House(building);
             //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
