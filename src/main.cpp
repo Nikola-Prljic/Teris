@@ -49,14 +49,17 @@ int main()
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            //Vector2 mouse_pos = GetMousePosition();
-            //Rectangle b_hitbox = interface.getButtonHitBox();
-            //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
-            //std::cout << hitbutton << std::endl;
-
-            House* building2 = new House(building);
-            //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
-            game_map.setModelOnGameMap(building2, camera);
+            Vector2 mouse_pos = GetMousePosition();
+            if (interface.isClicked(mouse_pos) == false)
+            {   
+                //Rectangle b_hitbox = interface.getButtonHitBox();
+                //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
+                //std::cout << hitbutton << std::endl;
+                
+                House* building2 = new House(building);
+                //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+                game_map.setModelOnGameMap(building2, camera);
+            }
         }
 
         //Vector3 interfacePos = Vector3Add(camera.position, Vector3{-0.0f, -0.5f, -0.0f});  
@@ -69,12 +72,15 @@ int main()
                 DrawCube(camera.target, 0.1f, 0.1f, 0.1f, RED);
                 //DrawModel(model, pos, 1.0f, WHITE);
 
-                DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
+                if(interface.getActiveButton() != nullptr)
+                {
+                    DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
+                    DrawBoundingBox(building.getHitBoxPos(), GREEN);
+                }
                 for(int i = 0; i < (int)game_map.game_map.size(); i++)
                 {
                     DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 0.5f, WHITE);
                 }
-                DrawBoundingBox(building.getHitBoxPos(), GREEN);
                 //DrawRay(ray, RED);
             EndMode3D();
             BeginMode2D(cameraInterface);

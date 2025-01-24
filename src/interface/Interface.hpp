@@ -16,8 +16,9 @@ class Interface
         Color color_background;
 
         Texture2D texture;
-        std::map<std::string, std::unique_ptr<button>> _button_map; 
-        //std::map<std::string, button> button_map;
+        std::map<std::string, std::shared_ptr<button>> _button_map; 
+        
+        std::shared_ptr<button> _active_button;
 
         Interface();
 
@@ -30,5 +31,8 @@ class Interface
 
         void draw();
 
+        bool isClicked(const Vector2 &mouse_pos);
+        bool setActiveButtonIfClicked(const Vector2 &mouse_pos, const std::string &button_name);
 
+        std::shared_ptr<button> getActiveButton();
 };
