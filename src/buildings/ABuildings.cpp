@@ -1,6 +1,9 @@
 #include "ABuildings.hpp"
 
 ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path), pos()
+ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): 
+model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path), pos(),
+yaw(0)
 {
     //load_model();
 }

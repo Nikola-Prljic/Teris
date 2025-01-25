@@ -19,6 +19,8 @@ class ABuildings
         
         Vector3 pos;
         
+        int yaw;
+
         ABuildings();
         virtual void f() = 0;
     
