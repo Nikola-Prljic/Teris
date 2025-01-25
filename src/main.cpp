@@ -99,9 +99,8 @@ int main()
                 //DrawModel(model, pos, 1.0f, WHITE);
 
                 // check if button clicked and mouse on map
-                if(interface.getActiveButton() != nullptr && groundHitInfo.hit)
+                if(interface.getActiveButtonName() == "house" && groundHitInfo.hit)
                 {
-                    // draw building at the mouse position
                     DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
                     DrawBoundingBox(building.getHitBoxPos(), GREEN);
                 }
