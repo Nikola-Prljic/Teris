@@ -81,6 +81,12 @@ int main()
                 //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
                 game_map.setModelOnGameMap(building2, camera);
             }
+            else if(groundHitInfo.hit && interface.getActiveButtonName() == "road_straight")
+            {
+                Road* road_straight2 = new Road(road_straight);
+                //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+                game_map.setModelOnGameMap(road_straight2, camera);
+            }
         }
 
         BeginDrawing();
