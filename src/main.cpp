@@ -105,6 +105,12 @@ int main()
                     DrawBoundingBox(building.getHitBoxPos(), GREEN);
                 }
 
+                if(interface.getActiveButtonName() == "road_straight" && groundHitInfo.hit)
+                {
+                    DrawModel(road_straight.getModel(), groundHitInfo.point, 0.5f, WHITE);
+                    DrawBoundingBox(road_straight.getHitBoxPos(), GREEN);
+                }
+
                 // draw all buildings on the map
                 for(size_t i = 0; i < game_map.game_map.size(); i++)
                 {
