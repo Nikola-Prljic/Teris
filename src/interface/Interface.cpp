@@ -20,11 +20,8 @@ Interface::~Interface()
 
 void Interface::createButtons()
 {
-    std::string button_name = "house";
     /* std::string button_name = "house";
     button new_button("house", Rectangle{0, 520, 100, 80});
-    _button_map.emplace("house", std::make_unique<button>(new_button));
-    //button_map["house"] = new_button;
     _button_map.emplace("house", std::make_unique<button>(new_button)); */
 
     createButton("house", Rectangle{0, 520, 100, 80});
@@ -47,9 +44,6 @@ void Interface::draw()
 
 bool Interface::isClicked(const Vector2 &mouse_pos)
 {
-    return setActiveButtonIfClicked(mouse_pos, "house");
-    //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
-    //std::cout << hitbutton << std::endl;
     if(setActiveButtonIfClicked(mouse_pos, "house"))
         return true;
     if(setActiveButtonIfClicked(mouse_pos, "road_straight"))
