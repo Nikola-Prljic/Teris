@@ -56,6 +56,16 @@ int main()
             building.setHitBoxPos(groundHitInfo);
         }
 
+        if(IsKeyReleased(KEY_R) && interface.getActiveButtonName() == "house")
+        {
+            building.rotate();
+        }
+
+        if(IsKeyReleased(KEY_R) && interface.getActiveButtonName() == "road_straight")
+        {
+            road_straight.rotate();
+        }
+
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
             Vector2 mouse_pos = GetMousePosition();
