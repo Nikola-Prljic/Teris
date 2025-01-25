@@ -22,8 +22,7 @@ RayCollision map::GetMapCollisionQuad(const Camera &camera)
 {
     Vector2 mouse_pos = GetMousePosition();
     Ray ray = GetScreenToWorldRay(mouse_pos, camera);
-    RayCollision groundHitInfo = GetRayCollisionQuad(ray, map_hitbox[0], map_hitbox[1], map_hitbox[2], map_hitbox[3]);
-    return groundHitInfo;
+    return GetRayCollisionQuad(ray, map_hitbox[0], map_hitbox[1], map_hitbox[2], map_hitbox[3]);
 }
 
 std::vector<ABuildings *> map::getGameMap() { return game_map; }

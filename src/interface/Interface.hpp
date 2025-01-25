@@ -33,6 +33,8 @@ class Interface
 
         bool isClicked(const Vector2 &mouse_pos);
         bool setActiveButtonIfClicked(const Vector2 &mouse_pos, const std::string &button_name);
+        bool isMouseOnInterface();
 
         std::shared_ptr<button> getActiveButton();
+        std::string getActiveButtonName() const;
 };

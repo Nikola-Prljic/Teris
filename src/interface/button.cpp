@@ -20,3 +20,5 @@ void button::setActive(const bool &is_active)
 { 
     _is_active = is_active; 
 }
+
+std::string button::getName() const { return _name; }

@@ -51,7 +51,21 @@ bool Interface::setActiveButtonIfClicked(const Vector2 &mouse_pos, const std::st
     return true;
 }
 
+bool Interface::isMouseOnInterface()
+{
+    Vector2 mouse_pos = GetMousePosition();
+    return CheckCollisionPointRec(mouse_pos, Rectangle{0, 520, static_cast<float>(texture.width), static_cast<float>(texture.height)});
+}
+
+// can return nullptr !
 std::shared_ptr<button> Interface::getActiveButton()
 {
     return _active_button;
+}
+
+std::string Interface::getActiveButtonName() const
+{
+    if (_active_button)
+        return _active_button->getName();
+    return std::string("");
 }

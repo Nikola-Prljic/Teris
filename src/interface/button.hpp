@@ -21,4 +21,6 @@ class button
 
         void setActive(const bool &is_active);
 
+        std::string getName() const;
+
 };
