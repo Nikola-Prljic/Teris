@@ -41,4 +41,5 @@ class ABuildings
 
         void setHitBoxPos(const RayCollision &groundHitInfo);
 
+        void rotate();
 };

@@ -1,6 +1,5 @@
 #include "ABuildings.hpp"
 
-ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path), pos()
 ABuildings::ABuildings(const std::string &model_path, const std::string &model_texture_path): 
 model(), texture(),  hit_box(), hit_box_pos(), model_path(model_path), model_texture_path(model_texture_path), pos(),
 yaw(0)
@@ -58,4 +57,12 @@ void ABuildings::unload_model()
 {
     UnloadTexture(texture);
     UnloadModel(model);
+}
+
+void ABuildings::rotate()
+{
+    yaw += 90;
+    if(yaw >= 360)
+        yaw = 0;
+    model.transform = MatrixRotateXYZ((Vector3){ 0, DEG2RAD*yaw, 0 });
 }
