@@ -22,6 +22,8 @@ class Interface
 
         Interface();
 
+        void createButton(const std::string &button_name, const Rectangle &hitbox);
+
     public:
 
         Interface(const int &width_background, const int &height_background, const Color &color_background);
