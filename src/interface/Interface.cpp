@@ -21,9 +21,20 @@ Interface::~Interface()
 void Interface::createButtons()
 {
     std::string button_name = "house";
+    /* std::string button_name = "house";
     button new_button("house", Rectangle{0, 520, 100, 80});
     _button_map.emplace("house", std::make_unique<button>(new_button));
     //button_map["house"] = new_button;
+    _button_map.emplace("house", std::make_unique<button>(new_button)); */
+
+    createButton("house", Rectangle{0, 520, 100, 80});
+    createButton("road_straight", Rectangle{100, 520, 100, 80});
+}
+
+void Interface::createButton(const std::string &button_name, const Rectangle &hitbox)
+{
+    button new_button(button_name, hitbox);
+    _button_map.emplace(button_name, std::make_unique<button>(new_button));
 }
 
 void Interface::draw()
