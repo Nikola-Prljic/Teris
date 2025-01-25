@@ -17,6 +17,9 @@ int main()
     House building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
     building.load_model();
 
+    Road road_straight("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/road_straight.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+    road_straight.load_model();
+
     Camera camera = { 0 };
     camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
