@@ -50,6 +50,11 @@ bool Interface::isClicked(const Vector2 &mouse_pos)
     return setActiveButtonIfClicked(mouse_pos, "house");
     //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
     //std::cout << hitbutton << std::endl;
+    if(setActiveButtonIfClicked(mouse_pos, "house"))
+        return true;
+    if(setActiveButtonIfClicked(mouse_pos, "road_straight"))
+        return true;
+    return false;
 }
 
 bool Interface::setActiveButtonIfClicked(const Vector2 &mouse_pos, const std::string &button_name)
