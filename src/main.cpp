@@ -5,6 +5,7 @@
 #include "interface/Interface.hpp"
 #include "move_camera/moveCamera.hpp"
 #include "map.hpp"
+#include "buildings/Road.hpp"
 
 int main()
 {
