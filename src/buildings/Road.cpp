@@ -9,3 +9,8 @@ void Road::f()
 {
     return ;
 }
+
+std::shared_ptr<ABuildings> Road::clone() const
+{
+    return std::make_shared<Road>(*this);
+}

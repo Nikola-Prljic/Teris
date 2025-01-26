@@ -5,6 +5,7 @@
 #include <raylib.h>
 #include <vector>
 #include "buildings/ABuildings.hpp"
+#include <memory>
 
 class map {
 
@@ -15,14 +16,14 @@ class map {
         map();
 
     public:
-        std::vector<ABuildings *> game_map;
+        std::vector<std::shared_ptr<ABuildings>> game_map;
         map(const std::string name, const int size);
         ~map();
 
         RayCollision GetMapCollisionQuad(const Camera &camera);
-        std::vector<ABuildings *> getGameMap();
+        std::vector<std::shared_ptr<ABuildings>> getGameMap();
 
-        void setModelOnGameMap(ABuildings *model, const Camera &camera);
+        void setModelOnGameMap(std::shared_ptr<ABuildings> model, const Camera &camera);
 
 };
 

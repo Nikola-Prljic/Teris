@@ -9,3 +9,8 @@ void House::f()
 {
     return ;
 }
+
+std::shared_ptr<ABuildings> House::clone() const
+{
+    return std::make_shared<House>(*this);
+}

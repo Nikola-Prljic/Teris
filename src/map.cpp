@@ -12,10 +12,10 @@ map::map(const std::string name, const int size) : name(name), size(size), map_h
 
 map::~map() 
 {
-    for(size_t i = 0; i < game_map.size(); i++)
+    /* for(size_t i = 0; i < game_map.size(); i++)
     {
         delete game_map[i];
-    }
+    } */
 };
 
 RayCollision map::GetMapCollisionQuad(const Camera &camera)
@@ -25,10 +25,10 @@ RayCollision map::GetMapCollisionQuad(const Camera &camera)
     return GetRayCollisionQuad(ray, map_hitbox[0], map_hitbox[1], map_hitbox[2], map_hitbox[3]);
 }
 
-std::vector<ABuildings *> map::getGameMap() { return game_map; }
+std::vector<std::shared_ptr<ABuildings>> map::getGameMap() { return game_map; }
 
 //Places a Model at the game_map to draw it later.
-void map::setModelOnGameMap(ABuildings *model, const Camera &camera)
+void map::setModelOnGameMap(std::shared_ptr<ABuildings> model, const Camera &camera)
 {
     RayCollision groundHitInfo = GetMapCollisionQuad(camera);
     model->setHitBoxPos(groundHitInfo);

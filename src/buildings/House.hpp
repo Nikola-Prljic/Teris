@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ABuildings.hpp"
+#include <memory>
 
 class House : public ABuildings
 {
@@ -12,4 +13,6 @@ class House : public ABuildings
     public:
 
         House(const std::string &model_path, const std::string &model_texture_path);
+
+        std::shared_ptr<ABuildings> clone() const override;
 };

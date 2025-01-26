@@ -66,3 +66,13 @@ void ABuildings::rotate()
         yaw = 0;
     model.transform = MatrixRotateXYZ((Vector3){ 0, DEG2RAD*yaw, 0 });
 }
+
+#include <iostream>
+
+ABuildings::ABuildings(const ABuildings& other) :
+model(other.model), texture(other.texture), hit_box(other.hit_box), 
+hit_box_pos(other.hit_box_pos), model_path(other.model_path), model_texture_path(other.model_texture_path), pos(other.pos),
+yaw(other.yaw)
+{
+    std::cout << "ABuildings Copy Constructor Called\n";
+}

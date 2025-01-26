@@ -3,6 +3,7 @@
 #include <string>
 #include <raylib.h>
 #include <raymath.h>
+#include <memory>
 
 class ABuildings 
 {
@@ -26,6 +27,7 @@ class ABuildings
     
     public:
 
+        virtual std::shared_ptr<ABuildings> clone() const = 0;
         ABuildings(const std::string &model_path, const std::string &model_texture_path);
         virtual ~ABuildings();
 
@@ -42,4 +44,6 @@ class ABuildings
         void setHitBoxPos(const RayCollision &groundHitInfo);
 
         void rotate();
+
+        ABuildings(const ABuildings& other);
 };

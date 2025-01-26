@@ -6,6 +6,7 @@
 #include "move_camera/moveCamera.hpp"
 #include "map.hpp"
 #include "buildings/Road.hpp"
+#include "interface/KeyManager.hpp"
 
 int main()
 {
@@ -19,6 +20,10 @@ int main()
 
     Road road_straight("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/road_straight.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
     road_straight.load_model();
+
+    std::map<std::string, std::shared_ptr<ABuildings>> models;
+    models.emplace("house", std::make_shared<House>(building));
+    models.emplace("road_straight", std::make_shared<Road>(road_straight));
 
     Camera camera = { 0 };
     camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position
@@ -38,6 +43,8 @@ int main()
     cameraInterface.zoom = 1.0f;
 
     moveCamera moveCamera(&camera, movmentspeed, rotationSpeed, zoomSpeed);
+
+    KeyManager keyManager;
     
     SetTargetFPS(30);
 
@@ -53,18 +60,10 @@ int main()
         if( interface.isMouseOnInterface() == false)
         {
             groundHitInfo = game_map.GetMapCollisionQuad(camera);
-            building.setHitBoxPos(groundHitInfo);
+            models["house"]->setHitBoxPos(groundHitInfo);
         }
 
-        if(IsKeyReleased(KEY_R) && interface.getActiveButtonName() == "house")
-        {
-            building.rotate();
-        }
-
-        if(IsKeyReleased(KEY_R) && interface.getActiveButtonName() == "road_straight")
-        {
-            road_straight.rotate();
-        }
+        keyManager.update(&interface, models);
 
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
@@ -77,15 +76,15 @@ int main()
             }
             else if(groundHitInfo.hit && interface.getActiveButtonName() == "house")
             {
-                House* building2 = new House(building);
+                //House house = dynamic_cast<House>(models["house"]);
                 //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
-                game_map.setModelOnGameMap(building2, camera);
+                std::shared_ptr<ABuildings> deepCopy = models["house"]->clone();
+                game_map.setModelOnGameMap(deepCopy, camera);
             }
             else if(groundHitInfo.hit && interface.getActiveButtonName() == "road_straight")
             {
-                Road* road_straight2 = new Road(road_straight);
-                //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
-                game_map.setModelOnGameMap(road_straight2, camera);
+                std::shared_ptr<ABuildings> deepCopy = models["road_straight"]->clone();
+                game_map.setModelOnGameMap(deepCopy, camera);
             }
         }
 
@@ -101,14 +100,14 @@ int main()
                 // check if button clicked and mouse on map
                 if(interface.getActiveButtonName() == "house" && groundHitInfo.hit)
                 {
-                    DrawModel(building.getModel(), groundHitInfo.point, 0.5f, WHITE);
-                    DrawBoundingBox(building.getHitBoxPos(), GREEN);
+                    DrawModel(models["house"]->getModel(), groundHitInfo.point, 0.5f, WHITE);
+                    DrawBoundingBox(models["house"]->getHitBoxPos(), GREEN);
                 }
 
                 if(interface.getActiveButtonName() == "road_straight" && groundHitInfo.hit)
                 {
-                    DrawModel(road_straight.getModel(), groundHitInfo.point, 0.5f, WHITE);
-                    DrawBoundingBox(road_straight.getHitBoxPos(), GREEN);
+                    DrawModel(models["road_straight"]->getModel(), groundHitInfo.point, 0.5f, WHITE);
+                    DrawBoundingBox(models["road_straight"]->getHitBoxPos(), GREEN);
                 }
 
                 // draw all buildings on the map
@@ -127,7 +126,8 @@ int main()
         EndDrawing();
     }
 
-    building.unload_model();
+    models["house"]->unload_model();
+    models["road_straight"]->unload_model();
 
     CloseWindow();
 }
