@@ -4,6 +4,7 @@
 #include "Interface.hpp"
 #include <memory>
 #include "../buildings/ABuildings.hpp"
+#include "../map.hpp"
 
 class KeyManager
 {
@@ -13,5 +14,5 @@ class KeyManager
         KeyManager();
         ~KeyManager();
 
-        void update(Interface *interface, std::map<std::string, std::shared_ptr<ABuildings>> &models);
+        void update(Interface *interface, map *game_map, std::map<std::string, std::shared_ptr<ABuildings>> &models, const RayCollision &groundHitInfo, const Camera &camera);
 };
