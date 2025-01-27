@@ -63,30 +63,7 @@ int main()
             models["house"]->setHitBoxPos(groundHitInfo);
         }
 
-        keyManager.update(&interface, models);
-
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            Vector2 mouse_pos = GetMousePosition();
-            if(interface.isClicked(mouse_pos))
-            {   
-                //Rectangle b_hitbox = interface.getButtonHitBox();
-                //bool hitbutton = CheckCollisionPointRec(mouse_pos, interface.getButtonHitBox());
-                //std::cout << hitbutton << std::endl;
-            }
-            else if(groundHitInfo.hit && interface.getActiveButtonName() == "house")
-            {
-                //House house = dynamic_cast<House>(models["house"]);
-                //House building2("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
-                std::shared_ptr<ABuildings> deepCopy = models["house"]->clone();
-                game_map.setModelOnGameMap(deepCopy, camera);
-            }
-            else if(groundHitInfo.hit && interface.getActiveButtonName() == "road_straight")
-            {
-                std::shared_ptr<ABuildings> deepCopy = models["road_straight"]->clone();
-                game_map.setModelOnGameMap(deepCopy, camera);
-            }
-        }
+        keyManager.update(&interface, &game_map, models, groundHitInfo, camera);
 
         BeginDrawing();
 
