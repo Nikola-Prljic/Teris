@@ -15,7 +15,7 @@ int main()
 
     InitWindow(screenWidth, screenHeight, "Teris");
 
-    House building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+    /* House building("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/building_A.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
     building.load_model();
 
     Road road_straight("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/road_straight.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
@@ -23,7 +23,7 @@ int main()
 
     std::map<std::string, std::shared_ptr<ABuildings>> models;
     models.emplace("house", std::make_shared<House>(building));
-    models.emplace("road_straight", std::make_shared<Road>(road_straight));
+    models.emplace("road_straight", std::make_shared<Road>(road_straight)); */
 
     Camera camera = { 0 };
     camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position
@@ -55,15 +55,8 @@ int main()
     {
         moveCamera.keyDownMoveCamera();
 
-        RayCollision groundHitInfo;
-        groundHitInfo.hit = false;
-        if( interface.isMouseOnInterface() == false && interface.getActiveButtonName() != "")
-        {
-            groundHitInfo = game_map.GetMapCollisionQuad(camera);
-            models[interface.getActiveButtonName()]->setHitBoxPos(groundHitInfo);
-        }
-
-        keyManager.update(interface, game_map, models, groundHitInfo, camera);
+        game_map.update(interface.isMouseOnInterface(), interface.getActiveButtonName(), camera);
+        keyManager.update(interface, game_map, camera);
 
         BeginDrawing();
 
@@ -72,34 +65,22 @@ int main()
             BeginMode3D(camera);
                 DrawGrid((int) 10, 1.0f);
                 DrawCube(camera.target, 0.1f, 0.1f, 0.1f, RED);
-                //DrawModel(model, pos, 1.0f, WHITE);
 
-                // check if button clicked and mouse on map
-                if(interface.getActiveButtonName() == "house" && groundHitInfo.hit)
-                {
-                    DrawModel(models["house"]->getModel(), groundHitInfo.point, 0.5f, WHITE);
-                    DrawBoundingBox(models["house"]->getHitBoxPos(), GREEN);
-                }
-
-                if(interface.getActiveButtonName() == "road_straight" && groundHitInfo.hit)
-                {
-                    DrawModel(models["road_straight"]->getModel(), groundHitInfo.point, 0.5f, WHITE);
-                    DrawBoundingBox(models["road_straight"]->getHitBoxPos(), GREEN);
-                }
                 game_map.draw();
-                //DrawRay(ray, RED);
+                game_map.drawSelectedModel(interface.getActiveButtonName());
+
             EndMode3D();
+
             BeginMode2D(cameraInterface);
-                //DrawGrid((int) 10, 1.0f);
+
                 interface.draw();
-                //interface.draw(building.getModel(), interfacePos);
+
             EndMode2D();
+
             DrawFPS(10, 10);
+
         EndDrawing();
     }
-
-    models["house"]->unload_model();
-    models["road_straight"]->unload_model();
 
     CloseWindow();
 }
