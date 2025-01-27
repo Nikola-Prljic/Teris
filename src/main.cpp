@@ -63,7 +63,7 @@ int main()
             models["house"]->setHitBoxPos(groundHitInfo);
         }
 
-        keyManager.update(&interface, &game_map, models, groundHitInfo, camera);
+        keyManager.update(interface, game_map, models, groundHitInfo, camera);
 
         BeginDrawing();
 

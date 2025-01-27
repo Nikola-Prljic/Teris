@@ -14,5 +14,5 @@ class KeyManager
         KeyManager();
         ~KeyManager();
 
-        void update(Interface *interface, map *game_map, std::map<std::string, std::shared_ptr<ABuildings>> &models, const RayCollision &groundHitInfo, const Camera &camera);
+        void update(Interface &interface, map &game_map, std::map<std::string, std::shared_ptr<ABuildings>> &models, const RayCollision &groundHitInfo, const Camera &camera);
 };
