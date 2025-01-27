@@ -42,6 +42,7 @@ void Interface::draw()
         DrawRectangleLinesEx(_active_button->getHitBox(), 4.0f, GREEN);
 }
 
+// sets the building we want to place
 bool Interface::isClicked(const Vector2 &mouse_pos)
 {
     if(setActiveButtonIfClicked(mouse_pos, "house"))
