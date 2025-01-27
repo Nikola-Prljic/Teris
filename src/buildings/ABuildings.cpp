@@ -41,10 +41,14 @@ float getCellCenter(const float &num)
 }
 
 // one cell of the grid is 2x2 so when user cklicks center the model
+// set pos and hitbox floord
 void ABuildings::setPos(const RayCollision &groundHitInfo) 
 {
     pos.x = std::floor(groundHitInfo.point.x) + 0.5;
     pos.z = std::floor(groundHitInfo.point.z) + 0.5;
+
+    hit_box_pos.min = Vector3Add(hit_box.min, pos);
+    hit_box_pos.max = Vector3Add(hit_box.max, pos);
 }
 
 void ABuildings::setHitBoxPos(const RayCollision &groundHitInfo)

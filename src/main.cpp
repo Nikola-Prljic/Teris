@@ -57,10 +57,10 @@ int main()
 
         RayCollision groundHitInfo;
         groundHitInfo.hit = false;
-        if( interface.isMouseOnInterface() == false)
+        if( interface.isMouseOnInterface() == false && interface.getActiveButtonName() != "")
         {
             groundHitInfo = game_map.GetMapCollisionQuad(camera);
-            models["house"]->setHitBoxPos(groundHitInfo);
+            models[interface.getActiveButtonName()]->setHitBoxPos(groundHitInfo);
         }
 
         keyManager.update(interface, game_map, models, groundHitInfo, camera);
@@ -86,12 +86,7 @@ int main()
                     DrawModel(models["road_straight"]->getModel(), groundHitInfo.point, 0.5f, WHITE);
                     DrawBoundingBox(models["road_straight"]->getHitBoxPos(), GREEN);
                 }
-
-                // draw all buildings on the map
-                for(size_t i = 0; i < game_map.game_map.size(); i++)
-                {
-                    DrawModel(game_map.game_map[i]->getModel(), game_map.game_map[i]->getPos(), 0.5f, WHITE);
-                }
+                game_map.draw();
                 //DrawRay(ray, RED);
             EndMode3D();
             BeginMode2D(cameraInterface);

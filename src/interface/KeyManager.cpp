@@ -31,7 +31,7 @@ void KeyManager::update(Interface &interface, map &game_map, std::map<std::strin
             return ;
 
         // get the model and clone it save it in game map so we can draw it later
-        std::shared_ptr<ABuildings> deepCopy = models[button_name]->clone();
-        game_map.setModelOnGameMap(deepCopy, camera);
+        //std::shared_ptr<ABuildings> deepCopy = models[button_name]->clone();
+        game_map.setModelOnGameMap(models[button_name], camera);
     }
 }

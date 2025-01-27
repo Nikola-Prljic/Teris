@@ -40,8 +40,8 @@ class ABuildings
         Vector3 getPos();
         
         void setPos(const RayCollision &groundHitInfo);
-
         void setHitBoxPos(const RayCollision &groundHitInfo);
+
 
         void rotate();
 

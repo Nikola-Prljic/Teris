@@ -1,7 +1,7 @@
 #include "map.hpp"
 
 // needs to be a quatrat so size is one lenght 4 = 4x4
-map::map(const std::string name, const int size) : name(name), size(size), map_hitbox(), game_map()
+map::map(const std::string &name, const int &size) : name(name), size(size), map_hitbox(), game_map()
 {
     Vector3 g0 = (Vector3){ (float)-size, 0.0f, (float)-size };
     Vector3 g1 = (Vector3){ (float)-size, 0.0f,  (float)size };
@@ -28,10 +28,20 @@ RayCollision map::GetMapCollisionQuad(const Camera &camera)
 std::vector<std::shared_ptr<ABuildings>> map::getGameMap() { return game_map; }
 
 //Places a Model at the game_map to draw it later.
-void map::setModelOnGameMap(std::shared_ptr<ABuildings> model, const Camera &camera)
+void map::setModelOnGameMap(const std::shared_ptr<ABuildings> &model, const Camera &camera)
 {
     RayCollision groundHitInfo = GetMapCollisionQuad(camera);
-    model->setHitBoxPos(groundHitInfo);
     model->setPos(groundHitInfo);
-    game_map.push_back(model);
+    game_map.push_back(model->clone());
+    
+}
+
+void map::draw()
+{
+    for(const std::shared_ptr<ABuildings> & element : game_map)
+        if (element)
+        {
+            DrawModel(element->getModel(), element->getPos(), 0.5f, WHITE);
+            DrawBoundingBox(element->getHitBoxPos(), GREEN);
+        }
 }
