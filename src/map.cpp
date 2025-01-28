@@ -27,26 +27,35 @@ RayCollision map::GetMapCollisionQuad(const Camera &camera)
     return GetRayCollisionQuad(ray, map_hitbox[0], map_hitbox[1], map_hitbox[2], map_hitbox[3]);
 }
 
-std::vector<std::shared_ptr<ABuildings>> map::getGameMap() { return game_map; }
-
 //Places a Model at the game_map to draw it later.
 void map::setModelOnGameMap(const std::string &model_name, const Camera &camera)
 {
     //RayCollision groundHitInfo = GetMapCollisionQuad(camera);
     if(groundHitInfo.hit == false || draw_selected_model == false)
         return ;
-    models[model_name]->setPos(groundHitInfo);
-    game_map.push_back(models[model_name]->clone());
+    models.at(model_name)->setPos(groundHitInfo);
+    if( game_map.find(MyVector3{models.at(model_name)->getPos()}) != game_map.end())
+        return ;
+    game_map.emplace(MyVector3{models.at(model_name)->getPos()}, models.at(model_name)->clone());
+    std::cout << game_map.size() << std::endl;
 }
 
 void map::draw()
 {
-    for(const std::shared_ptr<ABuildings> & element : game_map)
+    for (auto const& [key, val] : game_map)
+    {
+        if (val)
+        {
+            DrawModel(val->getModel(), val->getPos(), 0.5f, WHITE);
+            DrawBoundingBox(val->getHitBoxPos(), GREEN);
+        }
+    }
+    /* for(const std::shared_ptr<ABuildings> & element : game_map)
         if (element)
         {
             DrawModel(element->getModel(), element->getPos(), 0.5f, WHITE);
             DrawBoundingBox(element->getHitBoxPos(), GREEN);
-        }
+        } */
 }
 
 void map::create_models_map()
