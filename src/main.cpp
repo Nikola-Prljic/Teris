@@ -53,6 +53,7 @@ int main()
             ClearBackground(RAYWHITE);
 
             BeginMode3D(camera);
+
                 DrawGrid((int) 10, 1.0f);
                 DrawCube(camera.target, 0.1f, 0.1f, 0.1f, RED);
 
