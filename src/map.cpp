@@ -13,8 +13,11 @@ map::map(const std::string &name, const int &size) : name(name), size(size), map
 
 map::~map() 
 {
-    models["house"]->unload_model();
-    models["road_straight"]->unload_model();
+    for (auto const& [key, val] : models)
+    {
+        std::cout << "\033[34m[map.cpp][18] Unload model: " << key << "\033[0m" << std::endl;
+        val->unload_model();
+    }
 };
 
 RayCollision map::GetMapCollisionQuad(const Camera &camera)
