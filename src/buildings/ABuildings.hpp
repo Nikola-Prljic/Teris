@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <memory>
+#include <iostream>
 
 class ABuildings 
 {
@@ -20,12 +21,12 @@ class ABuildings
         
         Vector3 pos;
         
-        int yaw;
 
         ABuildings();
         virtual void f() = 0;
     
     public:
+        int yaw;
 
         virtual std::shared_ptr<ABuildings> clone() const = 0;
         ABuildings(const std::string &model_path, const std::string &model_texture_path);
@@ -46,4 +47,9 @@ class ABuildings
         void rotate();
 
         ABuildings(const ABuildings& other);
+
+        // road specific funktions
+        virtual void rotateX(const bool &x) {
+            std::cout << "WTF" << std::endl;
+        }
 };

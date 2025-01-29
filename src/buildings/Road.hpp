@@ -13,4 +13,5 @@ class Road : public ABuildings
 
         std::shared_ptr<ABuildings> clone() const override;
         Road(const std::string &model_path, const std::string &model_texture_path);
+        void rotateX(const bool &x) override;
 };

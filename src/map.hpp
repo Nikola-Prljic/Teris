@@ -42,12 +42,16 @@ class map {
         mapModels game_map;
         //make map with floor(pos) as key for hit box!
 
+        Vector3 pos_last_model;
         RayCollision groundHitInfo;
+
         bool draw_selected_model;
 
         map();
+        void setRoadOnGameMap(const std::string &model_name, const Camera &camera);
 
     public:
+        bool left_pressed;
         map(const std::string &name, const int &size);
         ~map();
 

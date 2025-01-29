@@ -17,7 +17,7 @@ void KeyManager::update(Interface &interface, map &game_map, const Camera &camer
     }
 
     // we cklick some where on map so we need to desice waht is happening
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     {
         Vector2 mouse_pos = GetMousePosition();
 
@@ -33,5 +33,11 @@ void KeyManager::update(Interface &interface, map &game_map, const Camera &camer
         // get the model and clone it save it in game map so we can draw it later
         //std::shared_ptr<ABuildings> deepCopy = models[button_name]->clone();
         game_map.setModelOnGameMap(button_name, camera);
+        game_map.left_pressed = true;
+    }
+
+    if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+    {
+        game_map.left_pressed = false;
     }
 }
