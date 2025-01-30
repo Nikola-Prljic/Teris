@@ -48,7 +48,7 @@ class map {
         bool draw_selected_model;
 
         map();
-        void setRoadOnGameMap(const std::string &model_name, const Camera &camera);
+        void setRoadOnGameMap(const std::string &model_name);
 
     public:
         bool left_pressed;

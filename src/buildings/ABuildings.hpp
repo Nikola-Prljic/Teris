@@ -52,4 +52,9 @@ class ABuildings
         virtual void rotateX(const bool &x) {
             std::cout << "WTF" << std::endl;
         }
+
+        virtual bool rotateIfKeyHold(const Vector3 pos_last_model, const bool &left_pressed) {
+            std::cout << "WTF" << std::endl;
+            return false;
+        }
 };

@@ -35,28 +35,22 @@ void map::setModelOnGameMap(const std::string &model_name, const Camera &camera)
     if(groundHitInfo.hit == false || draw_selected_model == false)
         return ;
     models.at(model_name)->setPos(groundHitInfo);
+    //checks if a model is already at this pos
     if( game_map.find(MyVector3{models.at(model_name)->getPos()}) != game_map.end())
         return ;
-    setRoadOnGameMap(model_name, camera);
+    setRoadOnGameMap(model_name);
     game_map.emplace(MyVector3{models.at(model_name)->getPos()}, models.at(model_name)->clone());
     pos_last_model = models.at(model_name)->getPos();
     std::cout << game_map.size() << std::endl;
 }
 
-void map::setRoadOnGameMap(const std::string &model_name, const Camera &camera)
+// rotate the road if key is hold to place multible roads in a line
+void map::setRoadOnGameMap(const std::string &model_name)
 {
-    if(model_name != "road_straight" || pos_last_model.y != 0 || left_pressed == false)
+    if(model_name != "road_straight" )
         return ;
-    Vector3 new_road_pos = models.at(model_name)->getPos();
-    if(Vector3Distance(pos_last_model, new_road_pos) != 1)
-    {
-        std::cout << "distance to big" << std::endl;
+    if(models.at(model_name)->rotateIfKeyHold(pos_last_model, left_pressed) == false)
         return ;
-    }
-    if(pos_last_model.x != new_road_pos.x)
-        models.at(model_name)->rotateX(true);
-    if(pos_last_model.z != new_road_pos.z)
-        models.at(model_name)->rotateX(false);
     if(game_map.at(pos_last_model)->yaw != models.at(model_name)->yaw)
         game_map.at(pos_last_model)->rotate();
 }
