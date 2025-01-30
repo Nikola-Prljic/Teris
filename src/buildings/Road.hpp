@@ -10,6 +10,8 @@ class Road : public ABuildings
         void f() override;
 
     public:
+        bool conected_road;
+        Vector3 conected_road_pos;
 
         std::shared_ptr<ABuildings> clone() const override;
         Road(const std::string &model_path, const std::string &model_texture_path);

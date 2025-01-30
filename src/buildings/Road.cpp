@@ -1,6 +1,6 @@
 #include "Road.hpp"
 
-Road::Road(const std::string &model_path, const std::string &model_texture_path) : ABuildings(model_path, model_texture_path)
+Road::Road(const std::string &model_path, const std::string &model_texture_path) : ABuildings(model_path, model_texture_path), conected_road(false), conected_road_pos()
 {
     return ;
 }
