@@ -40,5 +40,26 @@ bool Road::rotateIfKeyHold(const Vector3 pos_last_model, const bool &left_presse
         rotateX(true);
     if(pos_last_model.z != new_road_pos.z)
         rotateX(false);
+    setConnectedRoad(pos_last_model);
     return true;
+}
+
+void Road::setConnectedRoad(const Vector3 pos_last_model)
+{
+    enum Xdir {RIGHT = -1, LEFT = 1};
+    enum Zdir {UP = -1, DOWN = 1};
+
+    Vector3 direction = Vector3Subtract(getPos(), pos_last_model);
+
+    if(direction.x == RIGHT)
+    {
+        conected_road_pos.right = pos_last_model;
+        std::cout << "right" << std::endl;
+    }
+    if(direction.x == LEFT)
+        std::cout << "left" << std::endl;
+    if(direction.z == UP)
+        std::cout << "up" << std::endl;
+    if(direction.z == DOWN)
+        std::cout << "down" << std::endl;
 }

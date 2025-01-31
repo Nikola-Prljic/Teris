@@ -58,13 +58,13 @@ void map::setRoadOnGameMap(const std::string &model_name)
     if(game_map.at(pos_last_model)->yaw != models.at(model_name)->yaw)
     {
         std::shared_ptr<Road> last_road = std::dynamic_pointer_cast<Road>(game_map.at(pos_last_model));
-        if(last_road->conected_road == true)
-            std::cout << "corner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+        /* if(last_road->conected_road == true)
+            std::cout << "corner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl; */
         last_road->rotate();
     }
     std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(models.at(model_name));
     road->conected_road = true;
-    road->conected_road_pos = pos_last_model;
+    //road->conected_road_pos.emplace_back(pos_last_model);
 }
 
 void map::draw()

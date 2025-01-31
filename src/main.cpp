@@ -60,11 +60,18 @@ int main()
                 game_map.draw();
                 game_map.drawSelectedModel(interface.getActiveButtonName());
 
+                DrawLine3D((Vector3){ 0, 0, 0 }, (Vector3){ 5, 0, 0 }, RED);    // X-Axis
+                DrawLine3D((Vector3){ 0, 0, 0 }, (Vector3){ 0, 5, 0 }, GREEN);  // Y-Axis
+                DrawLine3D((Vector3){ 0, 0, 0 }, (Vector3){ 0, 0, 5 }, BLUE);   // Z-Axis
+
             EndMode3D();
 
             BeginMode2D(cameraInterface);
 
                 interface.draw();
+                DrawText("X", 700, 20, 20, RED);   // X-axis label
+                DrawText("Y", 700, 40, 20, GREEN);  // Y-axis label
+                DrawText("Z", 700, 60, 20, BLUE);   // Z-axis label
 
             EndMode2D();
 
