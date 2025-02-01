@@ -40,12 +40,22 @@ void map::setModelOnGameMap(const std::string &model_name, const Camera &camera)
     // conecting_mod click on a road and connect it to an other road in the next tidle
     // if hit on a road
     // next call hit another road
-    if( game_map.find(MyVector3{models.at(model_name)->getPos()}) != game_map.end())
+    MyVector3 current_model_pos = MyVector3{models.at(model_name)->getPos()};
+    if( game_map.find(current_model_pos) != game_map.end())
         return ;
     setRoadOnGameMap(model_name);
-    game_map.emplace(MyVector3{models.at(model_name)->getPos()}, models.at(model_name)->clone());
-    pos_last_model = models.at(model_name)->getPos();
-    std::cout << game_map.size() << std::endl;
+    game_map.emplace(current_model_pos, models.at(model_name)->clone());
+    if(model_name != "road_straight" )
+        return ;
+    if(pos_last_model.y == 0)
+    {
+        std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(game_map.at(current_model_pos));
+        std::shared_ptr<Road> last_road = std::dynamic_pointer_cast<Road>(game_map.at(pos_last_model));
+        road->setConnectedRoad(last_road, road);
+        if(last_road->hasAnyConectedRoads() == true)
+            last_road->setNewRoadType();
+    }
+    pos_last_model = current_model_pos;
 }
 
 // rotate the road if key is hold to place multible roads in a line
@@ -53,17 +63,20 @@ void map::setRoadOnGameMap(const std::string &model_name)
 {
     if(model_name != "road_straight" )
         return ;
-    if(models.at(model_name)->rotateIfKeyHold(pos_last_model, left_pressed) == false)
+
+
+    std::shared_ptr<Road> models_road = std::dynamic_pointer_cast<Road>(models.at(model_name));
+
+    if(models_road->rotateIfKeyHold(pos_last_model, left_pressed) == false)
         return ;
+
     if(game_map.at(pos_last_model)->yaw != models.at(model_name)->yaw)
     {
         std::shared_ptr<Road> last_road = std::dynamic_pointer_cast<Road>(game_map.at(pos_last_model));
-        /* if(last_road->conected_road == true)
-            std::cout << "corner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl; */
         last_road->rotate();
     }
-    std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(models.at(model_name));
-    road->conected_road = true;
+    /* std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(models.at(model_name));
+    road->conected_road = true; */
     //road->conected_road_pos.emplace_back(pos_last_model);
 }
 

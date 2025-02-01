@@ -1,6 +1,7 @@
 #include "Road.hpp"
 
-Road::Road(const std::string &model_path, const std::string &model_texture_path) : ABuildings(model_path, model_texture_path), conected_road(false), conected_road_pos()
+Road::Road(const std::string &model_path, const std::string &model_texture_path) : ABuildings(model_path, model_texture_path), 
+up(), down(), left(), right()
 {
     return ;
 }
@@ -40,26 +41,108 @@ bool Road::rotateIfKeyHold(const Vector3 pos_last_model, const bool &left_presse
         rotateX(true);
     if(pos_last_model.z != new_road_pos.z)
         rotateX(false);
-    setConnectedRoad(pos_last_model);
     return true;
 }
 
-void Road::setConnectedRoad(const Vector3 pos_last_model)
+// saves the roads that are conected to this road
+void Road::setConnectedRoad(std::weak_ptr<Road> weak_last_road, std::weak_ptr<Road> weak_this_road)
 {
     enum Xdir {RIGHT = -1, LEFT = 1};
-    enum Zdir {UP = -1, DOWN = 1};
+    enum Zdir {UP = 1, DOWN = -1};
 
-    Vector3 direction = Vector3Subtract(getPos(), pos_last_model);
-
-    if(direction.x == RIGHT)
+    if(std::shared_ptr<Road> last_road = weak_last_road.lock())
     {
-        conected_road_pos.right = pos_last_model;
-        std::cout << "right" << std::endl;
+        Vector3 direction = Vector3Subtract(getPos(), last_road->pos);
+
+        if(direction.x == RIGHT)
+        {
+            right = last_road;
+            last_road->left = weak_this_road; 
+            std::cout << "right" << std::endl;
+        }
+        else if(direction.x == LEFT)
+        {
+            left = last_road;
+            last_road->right = weak_this_road; 
+            std::cout << "left" << std::endl;
+        }
+        else if(direction.z == UP)
+        {
+            up = last_road;
+            last_road->down = weak_this_road; 
+            std::cout << "up" << std::endl;
+        }
+        else if(direction.z == DOWN)
+        {
+            down = last_road;
+            last_road->up = weak_this_road; 
+            std::cout << "down" << std::endl;
+        }
     }
-    if(direction.x == LEFT)
-        std::cout << "left" << std::endl;
-    if(direction.z == UP)
-        std::cout << "up" << std::endl;
-    if(direction.z == DOWN)
-        std::cout << "down" << std::endl;
+}
+
+bool Road::hasAnyConectedRoads()
+{
+    if(up.expired() == false)
+        return true;
+    if(down.expired() == false)
+        return true;
+    if(left.expired() == false)
+        return true;
+    if(right.expired() == false)
+        return true;
+    return false;
+}
+
+int Road::getRoadType()
+{
+    int i = 0;
+
+    if(up.expired() == false)
+        i += 1;
+    if(down.expired() == false)
+        i += 1;
+    if(left.expired() == false)
+        i += 1;
+    if(right.expired() == false)
+        i += 1;
+    return i;
+}
+
+void Road::setNewRoadType()
+{
+    enum RoadType : int { NONE, STRAIGHT, CURVE, T_INTERSECTION, INTERSECTION};
+    int type = getRoadType();
+
+    switch (type)
+    {
+        case STRAIGHT:
+            std::cout << "STRAIGHT" << std::endl;
+            break;
+
+        case CURVE:
+            setCURVE();
+            break;
+        
+        case T_INTERSECTION:
+            std::cout << "T_INTERSECTION" << std::endl;
+            break;
+        
+        case INTERSECTION:
+            std::cout << "INTERSECTION" << std::endl;
+            break;
+
+        case NONE:
+            std::cout << "NONE" << std::endl;
+            break;
+
+        default:
+            break;
+    }
+}
+
+void Road::setCURVE()
+{
+    if(up.expired() == false && left.expired() == false)
+        std::cout << "curve left to top" << std::endl;
 }
