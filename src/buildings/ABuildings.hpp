@@ -41,10 +41,13 @@ class ABuildings
         Vector3 getPos();
         
         void setPos(const RayCollision &groundHitInfo);
+        void setPos(const Vector3 &new_pos);
         void setHitBoxPos(const RayCollision &groundHitInfo);
+        void setHitBoxPos(const Vector3 &new_pos);
 
 
         void rotate();
+        void rotate(const float &new_yaw);
 
         ABuildings(const ABuildings& other);
 

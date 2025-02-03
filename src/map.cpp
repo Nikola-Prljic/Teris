@@ -45,6 +45,11 @@ void map::setModelOnGameMap(const std::string &model_name, const Camera &camera)
         return ;
     setRoadOnGameMap(model_name);
     game_map.emplace(current_model_pos, models.at(model_name)->clone());
+    connectRoads(model_name, current_model_pos);
+}
+
+void map::connectRoads(const std::string &model_name, const MyVector3 current_model_pos)
+{
     if(model_name != "road_straight" )
         return ;
     if(pos_last_model.y == 0)
@@ -52,8 +57,14 @@ void map::setModelOnGameMap(const std::string &model_name, const Camera &camera)
         std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(game_map.at(current_model_pos));
         std::shared_ptr<Road> last_road = std::dynamic_pointer_cast<Road>(game_map.at(pos_last_model));
         road->setConnectedRoad(last_road, road);
-        if(last_road->hasAnyConectedRoads() == true)
-            last_road->setNewRoadType();
+
+        RoadTypeAndYaw road_info = last_road->setNewRoadType();
+        if(road_info.type == "road_corner")
+        {
+            models.at("road_corner")->setPos(pos_last_model);
+            game_map[pos_last_model] = models.at("road_corner")->clone();
+            game_map[pos_last_model]->rotate(road_info.yaw);
+        }
     }
     pos_last_model = current_model_pos;
 }
@@ -75,27 +86,16 @@ void map::setRoadOnGameMap(const std::string &model_name)
         std::shared_ptr<Road> last_road = std::dynamic_pointer_cast<Road>(game_map.at(pos_last_model));
         last_road->rotate();
     }
-    /* std::shared_ptr<Road> road = std::dynamic_pointer_cast<Road>(models.at(model_name));
-    road->conected_road = true; */
-    //road->conected_road_pos.emplace_back(pos_last_model);
 }
 
 void map::draw()
 {
     for (auto const& [key, val] : game_map)
-    {
         if (val)
         {
             DrawModel(val->getModel(), val->getPos(), 0.5f, WHITE);
             DrawBoundingBox(val->getHitBoxPos(), GREEN);
         }
-    }
-    /* for(const std::shared_ptr<ABuildings> & element : game_map)
-        if (element)
-        {
-            DrawModel(element->getModel(), element->getPos(), 0.5f, WHITE);
-            DrawBoundingBox(element->getHitBoxPos(), GREEN);
-        } */
 }
 
 void map::create_models_map()
@@ -106,8 +106,12 @@ void map::create_models_map()
     Road road_straight("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/road_straight.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
     road_straight.load_model();
 
+    Road road_corner("H:/Programms 2023/raycasting java/Teris/models/Assets/obj/road_corner.obj", "H:/Programms 2023/raycasting java/Teris/models/Assets/obj/citybits_texture.png");
+    road_corner.load_model();
+
     models.emplace("house", std::make_shared<House>(building));
     models.emplace("road_straight", std::make_shared<Road>(road_straight));
+    models.emplace("road_corner", std::make_shared<Road>(road_corner));
 }
 
 void map::ModelSetHitbox( const std::string &model_name, const Camera &camera)

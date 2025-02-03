@@ -51,6 +51,19 @@ void ABuildings::setPos(const RayCollision &groundHitInfo)
     hit_box_pos.max = Vector3Add(hit_box.max, pos);
 }
 
+//sets new pos also hitbox
+void ABuildings::setPos(const Vector3 &new_pos)
+{
+    pos = new_pos;
+    setHitBoxPos(new_pos);
+}
+
+void ABuildings::setHitBoxPos(const Vector3 &new_pos)
+{
+    hit_box_pos.min = Vector3Add(hit_box.min, new_pos);
+    hit_box_pos.max = Vector3Add(hit_box.max, new_pos);
+}
+
 void ABuildings::setHitBoxPos(const RayCollision &groundHitInfo)
 {
     hit_box_pos.min = Vector3Add(hit_box.min, groundHitInfo.point);
@@ -68,6 +81,12 @@ void ABuildings::rotate()
     yaw += 90;
     if(yaw >= 360)
         yaw = 0;
+    model.transform = MatrixRotateXYZ((Vector3){ 0, DEG2RAD*yaw, 0 });
+}
+
+void ABuildings::rotate(const float &new_yaw)
+{
+    yaw = new_yaw;
     model.transform = MatrixRotateXYZ((Vector3){ 0, DEG2RAD*yaw, 0 });
 }
 

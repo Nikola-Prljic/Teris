@@ -70,4 +70,6 @@ class map {
         void drawSelectedModel(const std::string &model_name);
 
         void update(const bool &is_mouse_on_interface, const std::string &active_button_name, const Camera &camera);
+
+        void connectRoads(const std::string &model_name, const MyVector3 current_model_pos);
 };

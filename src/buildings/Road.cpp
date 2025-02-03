@@ -109,8 +109,11 @@ int Road::getRoadType()
     return i;
 }
 
-void Road::setNewRoadType()
+RoadTypeAndYaw Road::setNewRoadType()
 {
+    if(hasAnyConectedRoads() == false)
+        return RoadTypeAndYaw{"None", -1};
+
     enum RoadType : int { NONE, STRAIGHT, CURVE, T_INTERSECTION, INTERSECTION};
     int type = getRoadType();
 
@@ -121,8 +124,7 @@ void Road::setNewRoadType()
             break;
 
         case CURVE:
-            setCURVE();
-            break;
+            return setCURVE();
         
         case T_INTERSECTION:
             std::cout << "T_INTERSECTION" << std::endl;
@@ -139,10 +141,26 @@ void Road::setNewRoadType()
         default:
             break;
     }
+    return RoadTypeAndYaw{"None", -1};
 }
 
-void Road::setCURVE()
+RoadTypeAndYaw Road::setCURVE()
 {
-    if(up.expired() == false && left.expired() == false)
-        std::cout << "curve left to top" << std::endl;
+    if(up.expired() == false)
+    {
+        if(left.expired() == false)
+            return RoadTypeAndYaw{"road_corner", 180};
+
+        if(right.expired() == false)
+            return RoadTypeAndYaw{"road_corner", 90};
+    }
+    if(down.expired() == false)
+    {
+        if(left.expired() == false)
+            return RoadTypeAndYaw{"road_corner", 270};
+
+        if(right.expired() == false)
+            return RoadTypeAndYaw{"road_corner", 0};
+    }
+    return RoadTypeAndYaw{"None", -1};
 }

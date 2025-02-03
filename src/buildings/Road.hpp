@@ -4,6 +4,11 @@
 #include <vector>
 #include <iostream>
 
+struct RoadTypeAndYaw{
+    std::string type;
+    float yaw;
+};
+
 class Road : public ABuildings
 {
     private:
@@ -30,8 +35,8 @@ class Road : public ABuildings
         bool hasAnyConectedRoads();
 
         int getRoadType();
-        void setNewRoadType();
+        RoadTypeAndYaw setNewRoadType();
 
-        void setCURVE();
+        RoadTypeAndYaw setCURVE();
 
 };
